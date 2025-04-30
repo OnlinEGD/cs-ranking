@@ -63,7 +63,7 @@ if response.status_code == 200:
             if 'serie' in match and 'full_name' in match['serie']:
                 tournament_full_name = match['serie']['full_name']
                 
-                if match['tournament']['tier'] in ["s", "a"] or True:
+                if match['tournament']['tier'] in ["s", "a"]:
                     if 'status' in match and match['status'] == 'finished':
                         print(f"\nMecz zakończony: {match['name']} (ID: {match_id})")
 
