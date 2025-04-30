@@ -14,7 +14,8 @@ if not os.path.exists(processed_matches_file):
 else:
     processed_matches_df = pd.read_csv(processed_matches_file)
 
-URL = "https://api.pandascore.co/matches?sort=-modified_at&token=" + "0h2L7bzP-cSVpHP3zZHCpwMaPXuOf97yww4GFqxLT3TvDwqm_EY"
+TOKEN = os.getenv("PANDASCORE_TOKEN")
+URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={TOKEN}"
 
 response = requests.get(URL)
 
