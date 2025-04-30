@@ -27,6 +27,8 @@ response = requests.get(URL)
 def update_elo(team_a, team_b, score_a=2, score_b=1):
     global df
 
+    print(f"Aktualizuję ranking dla meczu: {team_a} vs {team_b}")
+
     for team in [team_a, team_b]:
         if team not in df["Team"].values:
             new_team = pd.DataFrame([{"Team": team, "Elo": 1000}])
@@ -51,8 +53,10 @@ def update_elo(team_a, team_b, score_a=2, score_b=1):
     df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
 
     df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
-
+    
     print(f"Nowy ranking: {team_a} - {round(R_A_new)}, {team_b} - {round(R_B_new)}")
+    print(f"Ranking zapisany do pliku ranking.csv.")
+
 
 if response.status_code == 200:
     matches = response.json()
