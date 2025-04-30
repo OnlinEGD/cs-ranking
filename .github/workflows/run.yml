@@ -2,11 +2,11 @@ name: Run ELO Update Every 30 Minutes
 
 on:
   schedule:
-    - cron: "*/30 * * * *"  # co 30 minut
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
-  contents: write  # Uprawnienia do zapisu
+  contents: write
 
 jobs:
   run-script:
@@ -34,9 +34,10 @@ jobs:
           git config user.email "actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OnlinEGD/cs-ranking.git
 
-
       - name: Commit updated files
         run: |
           git add ranking.csv processed_matches.csv
           git commit -m "Automated update [skip ci]" || echo "No changes to commit"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
