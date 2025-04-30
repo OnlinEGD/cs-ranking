@@ -2,7 +2,7 @@ name: Run ELO Update Every 30 Minutes
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
