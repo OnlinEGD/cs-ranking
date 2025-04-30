@@ -1,4 +1,4 @@
-name: Run ELO Update Every 30 Minutes
+name: Run ELO Update Every 10 Minutes
 
 on:
   schedule:
@@ -45,4 +45,4 @@ jobs:
           git commit -m "Automated update [skip ci]" || echo "No changes to commit"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
