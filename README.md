@@ -41,3 +41,5 @@ A Python script that automatically updates an ELO ranking for CS2 teams based on
 
 - A match must have a status of finished to be processed.
 
+- The ranking has been in force since 30th April 2025.
+
