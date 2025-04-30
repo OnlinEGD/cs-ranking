@@ -23,7 +23,7 @@ jobs:
           pip install pandas requests
 
       - name: Run script
-        run: python main.py
+        run: python script.py
 
       - name: Commit updated files
         run: |
