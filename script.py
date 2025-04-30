@@ -58,6 +58,8 @@ def update_elo(team_a, team_b, score_a=2, score_b=1):
     print(f"Ranking zapisany do pliku ranking.csv.")
 
 
+print("Script started")
+
 if response.status_code == 200:
     matches = response.json()
     
