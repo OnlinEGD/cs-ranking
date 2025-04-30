@@ -32,7 +32,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/OnlinEGD/cs-ranking.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/OnlinEGD/cs-ranking.git
+
 
       - name: Commit updated files
         run: |
