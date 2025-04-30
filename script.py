@@ -14,8 +14,13 @@ if not os.path.exists(processed_matches_file):
 else:
     processed_matches_df = pd.read_csv(processed_matches_file)
 
-TOKEN = os.getenv("PANDASCORE_TOKEN")
-URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={TOKEN}"
+PANDASCORE_TOKEN = os.getenv('PANDASCORE_TOKEN')
+
+if PANDASCORE_TOKEN is None:
+    raise ValueError("Token Pandascore nie jest ustawiony w zmiennych środowiskowych!")
+
+URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={PANDASCORE_TOKEN}"
+
 
 response = requests.get(URL)
 
