@@ -1,4 +1,4 @@
-name: Run ELO Update Every 30 Minutes
+name: Run ELO Update Every 10 Minutes
 
 on:
   schedule:
