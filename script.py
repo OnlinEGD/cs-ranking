@@ -19,7 +19,7 @@ PANDASCORE_TOKEN = os.getenv('PANDASCORE_TOKEN')
 if PANDASCORE_TOKEN is None:
     raise ValueError("Token Pandascore nie jest ustawiony w zmiennych środowiskowych!")
 
-URL = "https://api.pandascore.co/matches?sort=-modified_at&token=" + "0h2L7bzP-cSVpHP3zZHCpwMaPXuOf97yww4GFqxLT3TvDwqm_EY"
+URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={PANDASCORE_TOKEN}"
 
 
 response = requests.get(URL)
