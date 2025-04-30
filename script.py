@@ -27,13 +27,13 @@ response = requests.get(URL)
 def update_elo(team_a, team_b, score_a=2, score_b=1):
     global df
 
-    print(f"Aktualizuję ranking dla meczu: {team_a} vs {team_b}")
+    print(f"Ranking update for match: {team_a} vs {team_b}")
 
     for team in [team_a, team_b]:
         if team not in df["Team"].values:
             new_team = pd.DataFrame([{"Team": team, "Elo": 1000}])
             df = pd.concat([df, new_team], ignore_index=True)
-            print(f"Dodano drużynę {team} do rankingu z początkowym ELO 1000.")
+            print(f"Added team: {team} with default ELO: 1000.")
 
     R_A = df.loc[df["Team"] == team_a, "Elo"].values[0]
     R_B = df.loc[df["Team"] == team_b, "Elo"].values[0]
@@ -54,8 +54,8 @@ def update_elo(team_a, team_b, score_a=2, score_b=1):
 
     df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
     
-    print(f"Nowy ranking: {team_a} - {round(R_A_new)}, {team_b} - {round(R_B_new)}")
-    print(f"Ranking zapisany do pliku ranking.csv.")
+    print(f"New ranking: {team_a} - {round(R_A_new)}, {team_b} - {round(R_B_new)}")
+    print(f"Ranking saved in ranking.csv.")
 
 
 print("Script started")
@@ -67,7 +67,7 @@ if response.status_code == 200:
         match_id = match["id"]
 
         if match_id in processed_matches_df["match_id"].values:
-            print(f"\nMecz {match['name']} (ID: {match_id}) już został przetworzony. Pomijamy.")
+            print(f"\nMatch {match['name']} (ID: {match_id}) is in processed matches - skip.")
             continue
 
         if 'videogame' in match and match['videogame']['name'] == "Counter-Strike":
@@ -76,13 +76,13 @@ if response.status_code == 200:
                 
                 if match['tournament']['tier'] in ["s", "a"]:
                     if 'status' in match and match['status'] == 'finished':
-                        print(f"\nMecz zakończony: {match['name']} (ID: {match_id})")
+                        print(f"\nMatch finished: {match['name']} (ID: {match_id})")
 
                         if 'scheduled_at' in match:
                             match_date = match['scheduled_at']
                             match_datetime = datetime.strptime(match_date, '%Y-%m-%dT%H:%M:%SZ')
                             formatted_date = match_datetime.strftime('%d-%m-%Y %H:%M:%S')
-                            print(f"Data meczu: {formatted_date}")
+                            print(f"Match date: {formatted_date}")
                         
                         if len(match['opponents']) >= 2:
                             team_a_name = match['opponents'][0]['opponent']['name']
@@ -112,10 +112,10 @@ if response.status_code == 200:
                             processed_matches_df = pd.concat([processed_matches_df, pd.DataFrame([{"match_id": match_id}])], ignore_index=True)
                             processed_matches_df.to_csv(processed_matches_file, index=False)
                         else:
-                            print(f"Nie wystarczająca liczba drużyn w meczu: {match['name']}")
+                            print(f"Not enough teams in match: {match['name']}")
                             print('-' * 30)
                     else:
-                        print(f"\nMecz {match['name']} jeszcze się nie zakończył.")
+                        print(f"\nMatch {match['name']} is not finished yet.")
                         print(f"Scheduled Date: {match['scheduled_at']}")
                         print('-' * 30)
 else:
