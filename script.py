@@ -7,8 +7,6 @@ K = 32
 
 df = pd.read_csv("ranking.csv", sep=";", encoding="utf-8")
 df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
-df = df.sort_values(by="Placement")
-df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
 
 processed_matches_file = "processed_matches.csv"
 if not os.path.exists(processed_matches_file):
@@ -20,7 +18,7 @@ else:
 PANDASCORE_TOKEN = os.getenv('PANDASCORE_TOKEN')
 
 if PANDASCORE_TOKEN is None:
-    raise ValueError("Token Pandascore nie jest ustawiony w zmiennych środowiskowych!")
+    raise ValueError("Token Pandascore is not found in environment variables!")
 
 URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={PANDASCORE_TOKEN}"
 
@@ -123,3 +121,6 @@ if response.status_code == 200:
                         print('-' * 30)
 else:
     print(f"Error: {response.status_code}")
+
+df = df.sort_values(by="Placement")
+df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
