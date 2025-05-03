@@ -123,4 +123,4 @@ else:
     print(f"Error: {response.status_code}")
 
 df = df.sort_values(by="Placement")
-df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
+df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
