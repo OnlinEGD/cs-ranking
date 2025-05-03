@@ -3,7 +3,7 @@ A Python script that automatically updates an ELO ranking for CS2 teams based on
 
 <h2>Features</h2>
 
-- Fetches finished CS:GO matches from Pandascore (only tier S and A tournaments).
+- Fetches finished CS2 matches from Pandascore (only tier S and A tournaments).
 
 - Calculates ELO rating updates using the Elo algorithm (K=32).
 
