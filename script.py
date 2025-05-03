@@ -5,7 +5,7 @@ import os
 
 K = 32
 
-df = pd.read_csv("ranking.csv", sep=";", encoding="utf-8")
+df = pd.read_csv("ranking.csv", sep=",", encoding="utf-8")
 df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
 
 processed_matches_file = "processed_matches.csv"
