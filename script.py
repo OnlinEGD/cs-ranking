@@ -12,12 +12,6 @@ cutoff = pd.Timestamp.now() - pd.Timedelta(days=180)
 
 df.loc[df["LastPlayed"] < cutoff, "Elo"] = -df["Elo"].abs()
 
-df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
-df = df.sort_values(by="Placement")
-
-df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
-
-
 processed_matches_file = "processed_matches.csv"
 if not os.path.exists(processed_matches_file):
     processed_matches_df = pd.DataFrame(columns=["match_id"])
@@ -146,3 +140,8 @@ if response.status_code == 200:
                         print('-' * 30)
 else:
     print(f"Error: {response.status_code}")
+
+df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
+df = df.sort_values(by="Placement")
+
+df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
