@@ -1,17 +1,17 @@
-Placement,Team,Elo
-1,Vitality,1062
-2,Team Falcons,1030
-3,Astralis,1016
-3,BIG,1016
-3,MIBR,1016
-3,TheMongolz,1016
-7,Spirit,987
-7,MOUZ,987
-9,ODDIK,984
-9,Wildcard,984
-9,G2,984
-9,FaZe,984
-9,Aurora Gaming,984
-9,FURIA,984
-15,paiN,983
-15,FlyQuest,983
+Placement;Team;Elo;LastPlayed
+1;Vitality;1062;
+2;Team Falcons;1030;
+3;Astralis;1016;
+3;BIG;1016;
+3;MIBR;1016;
+3;TheMongolz;1016;
+7;Spirit;987;
+7;MOUZ;987;
+9;ODDIK;984;
+9;Wildcard;984;
+9;G2;984;
+9;FaZe;984;
+9;Aurora Gaming;984;
+9;FURIA;984;
+15;paiN;983;
+15;FlyQuest;983;

@@ -6,7 +6,17 @@ import os
 K = 32
 
 df = pd.read_csv("ranking.csv", sep=",", encoding="utf-8")
+df["LastPlayed"] = pd.to_datetime(df.get("LastPlayed", pd.NaT), errors='coerce')
+
+cutoff = pd.Timestamp.now() - pd.Timedelta(days=180)
+
+df.loc[df["LastPlayed"] < cutoff, "Elo"] = -df["Elo"].abs()
+
 df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
+df = df.sort_values(by="Placement")
+
+df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
+
 
 processed_matches_file = "processed_matches.csv"
 if not os.path.exists(processed_matches_file):
@@ -18,10 +28,9 @@ else:
 PANDASCORE_TOKEN = os.getenv('PANDASCORE_TOKEN')
 
 if PANDASCORE_TOKEN is None:
-    raise ValueError("Token Pandascore is not found in environment variables!")
+    raise ValueError("Token Pandascore nie jest ustawiony w zmiennych środowiskowych!")
 
 URL = f"https://api.pandascore.co/matches?sort=-modified_at&token={PANDASCORE_TOKEN}"
-
 
 response = requests.get(URL)
 
@@ -48,12 +57,25 @@ def update_elo(team_a, team_b, score_a=2, score_b=1):
     R_A_new = R_A + K * (S_A - E_A)
     R_B_new = R_B + K * (S_B - E_B)
 
+    for index, row in df.iterrows():
+        if row["Elo"] < 0:
+            print(f"Team {row['Team']} was inactive for a long time, now reactivating...")
+
+
+            df.at[index, "Elo"] = abs(row["Elo"])  
+            df.at[index, "LastPlayed"] = pd.Timestamp.now() 
+
+    if R_A < 0:
+        print(f"Team {team_a} was inactive — reactivating.")
+    if R_B < 0:
+        print(f"Team {team_b} was inactive — reactivating.")
+
     df.loc[df["Team"] == team_a, "Elo"] = round(R_A_new)
     df.loc[df["Team"] == team_b, "Elo"] = round(R_B_new)
 
     df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
 
-    df.to_csv("ranking.csv", sep=";", index=False, encoding="utf-8")
+    df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
     
     print(f"New ranking: {team_a} - {round(R_A_new)}, {team_b} - {round(R_B_new)}")
     print(f"Ranking saved in ranking.csv.")
@@ -121,6 +143,3 @@ if response.status_code == 200:
                         print('-' * 30)
 else:
     print(f"Error: {response.status_code}")
-
-df = df.sort_values(by="Placement")
-df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
