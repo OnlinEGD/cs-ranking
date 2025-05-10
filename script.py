@@ -73,6 +73,9 @@ def update_elo(team_a, team_b, score_a=2, score_b=1):
     df.loc[df["Team"] == team_a, "Elo"] = round(R_A_new)
     df.loc[df["Team"] == team_b, "Elo"] = round(R_B_new)
 
+    df.loc[df["Team"] == team_a, "LastPlayed"] = pd.Timestamp.now()
+    df.loc[df["Team"] == team_b, "LastPlayed"] = pd.Timestamp.now()
+
     df['Placement'] = df['Elo'].rank(ascending=False, method='min').astype(int)
 
     df.to_csv("ranking.csv", sep=",", index=False, encoding="utf-8")
