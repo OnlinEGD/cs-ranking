@@ -8,7 +8,7 @@ K = 32
 df = pd.read_csv("ranking.csv", sep=",", encoding="utf-8")
 df["LastPlayed"] = pd.to_datetime(df.get("LastPlayed", pd.NaT), errors='coerce')
 
-cutoff = pd.Timestamp.now() - pd.Timedelta(days=180)
+cutoff = pd.Timestamp.now() - pd.Timedelta(days=90)
 
 df.loc[df["LastPlayed"] < cutoff, "Elo"] = -df["Elo"].abs()
 
