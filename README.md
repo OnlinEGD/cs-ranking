@@ -13,7 +13,7 @@ A Python script that automatically updates an ELO ranking for CS2 teams based on
 
 - Runs automatically every 10 minutes via GitHub Actions.
 
-- Updatedes inactive teams ELO and sets negative value (After 180 days of inactivity).
+- Updatedes inactive teams ELO and sets negative value (After 90 days of inactivity).
 
 <h2>GitHub Actions</h2>
 
